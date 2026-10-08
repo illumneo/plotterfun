@@ -127,7 +127,7 @@ async function computeArrivalTimes(getPixel) {
       const py = Math.min(config.height - 1, y * step);
       const gray = 255 - getPixel(px, py);
 
-      F[x + y * fieldWidth] = 0.01 + 0.99 * (gray / 255);
+      F[x + y * fieldWidth] = 0.05 + 0.95 * (gray / 255);
     }
   }
 
@@ -322,9 +322,9 @@ function generateContours(T, step) {
   for (let level = min; level <= max; level += spacing) {
     const segments = marchingSquares(T, level, step);
 
-    // The original uses ReorderHelper after each contour level.
     if (segments.length) {
       result.push(...reorder(segments));
+      postLines(result);
     }
   }
 
